@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="sacm" nsURI="http://www.omg.org/sacm/2.0" nsPrefix="sacm">
+  <eSubpackages name="base" nsURI="http://www.omg.org/sacm/2.0/base" nsPrefix="base_">
+    <eClassifiers xsi:type="ecore:EClass" name="Element" abstract="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="LangString" eSuperTypes="#//base/Element">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="lang" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ExpressionLangString" eSuperTypes="#//base/LangString">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
+          eType="#//terminology/ExpressionElement" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MultiLangString" eSuperTypes="#//base/Element">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1"
+          upperBound="-1" eType="#//base/LangString" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SACMElement" abstract="true" eSuperTypes="#//base/Element">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="gid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isCitation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isAbstract" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="citedElement" eType="#//base/SACMElement"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="abstractForm" eType="#//base/SACMElement"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="UtilityElement" abstract="true" eSuperTypes="#//base/SACMElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="content" eType="#//base/MultiLangString"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Description" eSuperTypes="#//base/UtilityElement"/>
+    <eClassifiers xsi:type="ecore:EClass" name="ImplementationConstraint" eSuperTypes="#//base/UtilityElement"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Note" eSuperTypes="#//base/UtilityElement"/>
+    <eClassifiers xsi:type="ecore:EClass" name="TaggedValue" eSuperTypes="#//base/UtilityElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="key" lowerBound="1" eType="#//base/MultiLangString"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ModelElement" abstract="true" eSuperTypes="#//base/SACMElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//base/LangString"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="description" eType="#//base/Description"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="implementationConstraint"
+          upperBound="-1" eType="#//base/ImplementationConstraint" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="note" upperBound="-1"
+          eType="#//base/Note" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="taggedValue" upperBound="-1"
+          eType="#//base/TaggedValue" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArtifactElement" abstract="true" eSuperTypes="#//base/ModelElement"/>
+  </eSubpackages>
+  <eSubpackages name="terminology" nsURI="http://www.omg.org/sacm/2.0/terminology"
+      nsPrefix="terminology_">
+    <eClassifiers xsi:type="ecore:EClass" name="TerminologyElement" abstract="true"
+        eSuperTypes="#//base/ArtifactElement"/>
+    <eClassifiers xsi:type="ecore:EClass" name="TerminologyGroup" eSuperTypes="#//terminology/TerminologyElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="terminologyElement" upperBound="-1"
+          eType="#//terminology/TerminologyElement"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TerminologyPackage" eSuperTypes="#//terminology/TerminologyElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="terminologyElement" upperBound="-1"
+          eType="#//terminology/TerminologyElement" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TerminologyPackageBinding" eSuperTypes="#//terminology/TerminologyPackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="participantPackage" lowerBound="2"
+          upperBound="-1" eType="#//terminology/TerminologyPackage"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TerminologyPackageInterface" eSuperTypes="#//terminology/TerminologyPackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="implements" lowerBound="1"
+          eType="#//terminology/TerminologyPackage"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TerminologyAsset" abstract="true"
+        eSuperTypes="#//terminology/TerminologyElement"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Category" eSuperTypes="#//terminology/TerminologyAsset"/>
+    <eClassifiers xsi:type="ecore:EClass" name="ExpressionElement" abstract="true"
+        eSuperTypes="#//terminology/TerminologyAsset">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="category" eType="#//terminology/Category"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Expression" eSuperTypes="#//terminology/ExpressionElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="element" upperBound="-1"
+          eType="#//terminology/ExpressionElement"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Term" eSuperTypes="#//terminology/ExpressionElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalReference" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="origin" eType="#//base/ModelElement"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="assuranceCase" nsURI="http://www.omg.org/sacm/2.0/assurancecase"
+      nsPrefix="assuranceCase_">
+    <eClassifiers xsi:type="ecore:EClass" name="AssuranceCasePackage" eSuperTypes="#//base/ArtifactElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="assuranceCasePackage"
+          upperBound="-1" eType="#//assuranceCase/AssuranceCasePackage" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="interface" upperBound="-1"
+          eType="#//assuranceCase/AssuranceCasePackageInterface"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="artifactPackage" upperBound="-1"
+          eType="#//artifact/ArtifactPackage" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="argumentPackage" upperBound="-1"
+          eType="#//argumentation/ArgumentPackage" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="terminologyPackage" upperBound="-1"
+          eType="#//terminology/TerminologyPackage" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="AssuranceCasePackageBinding" eSuperTypes="#//assuranceCase/AssuranceCasePackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="participantPackage" lowerBound="2"
+          upperBound="-1" eType="#//assuranceCase/AssuranceCasePackage"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="AssuranceCasePackageInterface" eSuperTypes="#//assuranceCase/AssuranceCasePackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="implements" lowerBound="1"
+          eType="#//assuranceCase/AssuranceCasePackage"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="artifact" nsURI="http://www.omg.org/sacm/2.0/artifact" nsPrefix="artifact_">
+    <eClassifiers xsi:type="ecore:EClass" name="ArtifactPackage" eSuperTypes="#//base/ArtifactElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="artifactElement" upperBound="-1"
+          eType="#//base/ArtifactElement" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArtifactGroup" eSuperTypes="#//base/ArtifactElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="artifactElement" upperBound="-1"
+          eType="#//base/ArtifactElement"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArtifactPackageBinding" eSuperTypes="#//artifact/ArtifactPackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="participantPackage" lowerBound="2"
+          upperBound="-1" eType="#//artifact/ArtifactPackage"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArtifactPackageInterface" eSuperTypes="#//artifact/ArtifactPackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="implements" lowerBound="1"
+          eType="#//artifact/ArtifactPackage"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArtifactAsset" abstract="true" eSuperTypes="#//base/ArtifactElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="property" upperBound="-1"
+          eType="#//artifact/Property" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Property" eSuperTypes="#//artifact/ArtifactAsset"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Technique" eSuperTypes="#//artifact/ArtifactAsset"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Participant" eSuperTypes="#//artifact/ArtifactAsset"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Activity" eSuperTypes="#//artifact/ArtifactAsset">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="startTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="endTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Event" eSuperTypes="#//artifact/ArtifactAsset">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="occurence" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Resource" eSuperTypes="#//artifact/ArtifactAsset"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Artifact" eSuperTypes="#//artifact/ArtifactAsset">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="date" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArtifactAssetRelationship" eSuperTypes="#//artifact/ArtifactAsset">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
+          upperBound="-1" eType="#//artifact/ArtifactAsset"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+          upperBound="-1" eType="#//artifact/ArtifactAsset"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="argumentation" nsURI="http://www.omg.org/sacm/2.0/argument"
+      nsPrefix="argument_">
+    <eClassifiers xsi:type="ecore:EEnum" name="AssertionDeclaration">
+      <eLiterals name="asserted" value="1"/>
+      <eLiterals name="needsSupport" value="2"/>
+      <eLiterals name="assumed" value="3"/>
+      <eLiterals name="axiomatic" value="4"/>
+      <eLiterals name="defeated" value="5"/>
+      <eLiterals name="asCited" value="6"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArgumentationElement" abstract="true"
+        eSuperTypes="#//base/ArtifactElement"/>
+    <eClassifiers xsi:type="ecore:EClass" name="ArgumentGroup" eSuperTypes="#//argumentation/ArgumentationElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="argumentationElement"
+          upperBound="-1" eType="#//argumentation/ArgumentationElement"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArgumentPackage" eSuperTypes="#//argumentation/ArgumentationElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="argumentationElement"
+          upperBound="-1" eType="#//argumentation/ArgumentationElement" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArgumentPackageInterface" eSuperTypes="#//argumentation/ArgumentPackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="implements" lowerBound="1"
+          eType="#//argumentation/ArgumentPackage"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArgumentPackageBinding" eSuperTypes="#//argumentation/ArgumentPackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="participantPackage" lowerBound="2"
+          upperBound="-1" eType="#//argumentation/ArgumentPackage"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArgumentAsset" abstract="true" eSuperTypes="#//argumentation/ArgumentationElement"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Assertion" abstract="true" eSuperTypes="#//argumentation/ArgumentAsset">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="assertionDeclaration"
+          lowerBound="1" eType="#//argumentation/AssertionDeclaration" defaultValueLiteral="asserted"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="metaClaim" upperBound="-1"
+          eType="#//argumentation/Claim"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArgumentReasoning" eSuperTypes="#//argumentation/ArgumentAsset">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="structure" eType="#//argumentation/ArgumentPackage"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Claim" eSuperTypes="#//argumentation/Assertion"/>
+    <eClassifiers xsi:type="ecore:EClass" name="AssertedRelationship" abstract="true"
+        eSuperTypes="#//argumentation/Assertion">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isCounter" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
+          upperBound="-1" eType="#//argumentation/ArgumentAsset"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+          upperBound="-1" eType="#//argumentation/ArgumentAsset"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="reasoning" eType="#//argumentation/ArgumentReasoning"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArtifactReference" eSuperTypes="#//argumentation/ArgumentAsset">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="referencedArtifactElement"
+          upperBound="-1" eType="#//base/ArtifactElement"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="AssertedArtifactSupport" eSuperTypes="#//argumentation/AssertedRelationship"/>
+    <eClassifiers xsi:type="ecore:EClass" name="AssertedArtifactContext" eSuperTypes="#//argumentation/AssertedRelationship"/>
+    <eClassifiers xsi:type="ecore:EClass" name="AssertedInference" eSuperTypes="#//argumentation/AssertedRelationship"/>
+    <eClassifiers xsi:type="ecore:EClass" name="AssertedEvidence" eSuperTypes="#//argumentation/AssertedRelationship"/>
+    <eClassifiers xsi:type="ecore:EClass" name="AssertedContext" eSuperTypes="#//argumentation/AssertedRelationship"/>
+  </eSubpackages>
+</ecore:EPackage>

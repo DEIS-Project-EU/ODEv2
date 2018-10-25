@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="failureLogic" nsURI="http://www.deis-project.eu/ode/failureLogic"
+    nsPrefix="failureLogic">
+  <eClassifiers xsi:type="ecore:EClass" name="FailureLogicPackage">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="failureModels" upperBound="-1"
+        eType="#//FailureModel" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Failure" eSuperTypes="base.ecore#//BaseElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="originType" eType="#//FailureOriginType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="failureClass" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="failureRate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isCcf" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="failureProbDistribution"
+        eType="#//ProbDist" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ccfFailures" upperBound="-1"
+        eType="#//Failure"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SecurityViolation" eSuperTypes="#//Failure"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="FailureOriginType">
+    <eLiterals name="Input"/>
+    <eLiterals name="Output" value="1"/>
+    <eLiterals name="Internal" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FailureModel" eSuperTypes="base.ecore#//BaseElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="minimalCutsets" upperBound="-1"
+        eType="#//MinimalCutSets" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="failures" upperBound="-1"
+        eType="#//Failure" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subModels" upperBound="-1"
+        eType="#//FailureModel"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MinimalCutSets" eSuperTypes="base.ecore#//BaseElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cutsets" upperBound="-1"
+        eType="#//MinimalCutset" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="failures" upperBound="-1"
+        eType="#//Failure"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MinimalCutset" eSuperTypes="base.ecore#//BaseElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="failures" upperBound="-1"
+        eType="#//Failure"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProbDist" eSuperTypes="base.ecore#//BaseElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="#//ProbDistParam" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProbDistParam" eSuperTypes="base.ecore#//BaseElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eSubpackages name="FTA" nsURI="http://www.deis-project.eu/ode/failureLogic/FTA"
+      nsPrefix="FTA">
+    <eClassifiers xsi:type="ecore:EEnum" name="GateType">
+      <eLiterals name="OR"/>
+      <eLiterals name="AND" value="1"/>
+      <eLiterals name="NOT" value="2"/>
+      <eLiterals name="XOR" value="3"/>
+      <eLiterals name="VOTE" value="4"/>
+      <eLiterals name="PAND" value="5"/>
+      <eLiterals name="POR" value="6"/>
+      <eLiterals name="SAND" value="7"/>
+      <eLiterals name="InputEvent" value="8"/>
+      <eLiterals name="OutputEvent" value="9"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="CauseType">
+      <eLiterals name="InputEvent"/>
+      <eLiterals name="OutputEvent" value="1"/>
+      <eLiterals name="BasicEvent" value="2"/>
+      <eLiterals name="Gate" value="3"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="FaultTree" eSuperTypes="#//FailureModel">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="causes" upperBound="-1"
+          eType="#//FTA/Cause" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Cause" eSuperTypes="base.ecore#//BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//FTA/CauseType"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="failure" eType="#//Failure"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Gate" eSuperTypes="#//FTA/Cause">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="gateType" eType="#//FTA/GateType"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="causes" upperBound="-1"
+          eType="#//FTA/Cause"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="Markov" nsURI="http://www.deis-project.eu/ode/failureLogic/Markov"
+      nsPrefix="Markov">
+    <eClassifiers xsi:type="ecore:EClass" name="MarkovChain" eSuperTypes="#//FailureModel">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="transitions" upperBound="-1"
+          eType="#//Markov/Transition" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="states" upperBound="-1"
+          eType="#//Markov/State" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="State" eSuperTypes="base.ecore#//BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInitialState" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isFailState" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="failState" eType="#//Failure"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="base.ecore#//BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="transition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="transitionProbDistribution"
+          eType="#//ProbDist" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="fromStates" upperBound="-1"
+          eType="#//Markov/State"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="toStates" upperBound="-1"
+          eType="#//Markov/State"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="FMEA" nsURI="http://www.deis-project.eu/ode/failureLogic/FMEA"
+      nsPrefix="FMEA">
+    <eClassifiers xsi:type="ecore:EEnum" name="FMEAType">
+      <eLiterals name="FMEA"/>
+      <eLiterals name="FMEDA" value="1"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="FMEA" eSuperTypes="#//FailureModel">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//FMEA/FMEAType"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="entries" upperBound="-1"
+          eType="#//FMEA/FMEAEntry" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="FMEAEntry" eSuperTypes="base.ecore#//BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="effect" eType="#//Failure"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mode" eType="#//Failure"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="FMEDAEntry" eSuperTypes="#//FMEA/FMEAEntry">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="diagnosisRate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="diagnosisProbDistribution"
+          eType="#//ProbDist" containment="true"/>
+    </eClassifiers>
+  </eSubpackages>
+</ecore:EPackage>
