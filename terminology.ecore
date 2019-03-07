@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="terminology" nsURI="http://omg.sacm/2.0/terminology" nsPrefix="terminology_">
+  <eClassifiers xsi:type="ecore:EClass" name="TerminologyElement" abstract="true"
+      eSuperTypes="base.ecore#//ArtifactElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TerminologyGroup" eSuperTypes="#//TerminologyElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="terminologyElement" upperBound="-1"
+        eType="#//TerminologyElement"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TerminologyPackage" eSuperTypes="#//TerminologyElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="terminologyElement" upperBound="-1"
+        eType="#//TerminologyElement" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TerminologyPackageBinding" eSuperTypes="#//TerminologyPackage">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="participantPackage" lowerBound="2"
+        upperBound="-1" eType="#//TerminologyPackage"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TerminologyPackageInterface" eSuperTypes="#//TerminologyPackage">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="implements" lowerBound="1"
+        eType="#//TerminologyPackage"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TerminologyAsset" abstract="true" eSuperTypes="#//TerminologyElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Category" eSuperTypes="#//TerminologyAsset">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="category" eType="#//Category"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExpressionElement" abstract="true" eSuperTypes="#//TerminologyAsset">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="category" upperBound="-1"
+        eType="#//Category"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Expression" eSuperTypes="#//ExpressionElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" upperBound="-1"
+        eType="#//ExpressionElement"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Term" eSuperTypes="#//ExpressionElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalReference" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="origin" eType="ecore:EClass base.ecore#//ModelElement"/>
+  </eClassifiers>
+</ecore:EPackage>

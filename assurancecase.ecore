@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="assuranceCase" nsURI="http://omg.sacm/2.0/assurancecase" nsPrefix="assuranceCase_">
+  <eClassifiers xsi:type="ecore:EClass" name="AssuranceCasePackage" eSuperTypes="base.ecore#//ArtifactElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assuranceCasePackage" upperBound="-1"
+        eType="#//AssuranceCasePackage" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interface" upperBound="-1"
+        eType="#//AssuranceCasePackageInterface"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="artifactPackage" upperBound="-1"
+        eType="ecore:EClass artifact.ecore#//ArtifactPackage" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="argumentPackage" upperBound="-1"
+        eType="ecore:EClass argumentation.ecore#//ArgumentPackage" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="terminologyPackage" upperBound="-1"
+        eType="ecore:EClass terminology.ecore#//TerminologyPackage" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AssuranceCasePackageBinding" eSuperTypes="#//AssuranceCasePackage">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="participantPackage" lowerBound="2"
+        upperBound="-1" eType="#//AssuranceCasePackage"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AssuranceCasePackageInterface" eSuperTypes="#//AssuranceCasePackage">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="implements" lowerBound="1"
+        eType="#//AssuranceCasePackage"/>
+  </eClassifiers>
+</ecore:EPackage>

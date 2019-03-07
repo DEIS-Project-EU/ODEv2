@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="artifact" nsURI="http://omg.sacm/2.0/artifact" nsPrefix="artifact_">
+  <eClassifiers xsi:type="ecore:EClass" name="ArtifactGroup" eSuperTypes="base.ecore#//ArtifactElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="artifactElement" upperBound="-1"
+        eType="ecore:EClass base.ecore#//ArtifactElement"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ArtifactPackage" eSuperTypes="base.ecore#//ArtifactElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="artifactElement" upperBound="-1"
+        eType="ecore:EClass base.ecore#//ArtifactElement" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ArtifactPackageBinding" eSuperTypes="#//ArtifactPackage">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="participantPackage" lowerBound="2"
+        upperBound="-1" eType="#//ArtifactPackage"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ArtifactPackageInterface" eSuperTypes="#//ArtifactPackage">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="implements" lowerBound="1"
+        eType="#//ArtifactPackage"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ArtifactAsset" abstract="true" eSuperTypes="base.ecore#//ArtifactElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="artifactProperty" upperBound="-1"
+        eType="#//Property"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Property" eSuperTypes="#//ArtifactAsset"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Technique" eSuperTypes="#//ArtifactAsset"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Participant" eSuperTypes="#//ArtifactAsset"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Activity" eSuperTypes="#//ArtifactAsset">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Event" eSuperTypes="#//ArtifactAsset">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="occurence" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Resource" eSuperTypes="#//ArtifactAsset"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Artifact" eSuperTypes="#//ArtifactAsset">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="date" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ArtifactAssetRelationship" eSuperTypes="#//ArtifactAsset">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
+        upperBound="-1" eType="#//ArtifactAsset"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+        upperBound="-1" eType="#//ArtifactAsset"/>
+  </eClassifiers>
+</ecore:EPackage>
