@@ -1,0 +1,749 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="top" nsURI="http://www.deis-project.eu/ode/mergedODE" nsPrefix="mergedODE">
+  <eSubpackages name="base" nsURI="http://www.deis-project.eu/ode/mergedODE/sacm/base"
+      nsPrefix="base_">
+    <eClassifiers xsi:type="ecore:EClass" name="Element" abstract="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="LangString" eSuperTypes="#//base/Element">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="lang" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ExpressionLangString" eSuperTypes="#//base/LangString">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
+          eType="#//base/ArtifactElement" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MultiLangString" eSuperTypes="#//base/Element">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1"
+          upperBound="-1" eType="#//base/LangString" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SACMElement" abstract="true" eSuperTypes="#//base/Element">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="gid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isCitation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isAbstract" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="citedElement" eType="#//base/SACMElement"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="abstractForm" eType="#//base/SACMElement"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="UtilityElement" abstract="true" eSuperTypes="#//base/SACMElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="content" eType="#//base/MultiLangString"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Description" eSuperTypes="#//base/UtilityElement"/>
+    <eClassifiers xsi:type="ecore:EClass" name="ImplementationConstraint" eSuperTypes="#//base/UtilityElement"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Note" eSuperTypes="#//base/UtilityElement"/>
+    <eClassifiers xsi:type="ecore:EClass" name="TaggedValue" eSuperTypes="#//base/UtilityElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="key" lowerBound="1" eType="#//base/MultiLangString"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ModelElement" abstract="true" eSuperTypes="#//base/SACMElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//base/LangString"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="description" eType="#//base/Description"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="implementationConstraint"
+          upperBound="-1" eType="#//base/ImplementationConstraint" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="note" upperBound="-1"
+          eType="#//base/Note" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="taggedValue" upperBound="-1"
+          eType="#//base/TaggedValue" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArtifactElement" abstract="true" eSuperTypes="#//base/ModelElement"/>
+  </eSubpackages>
+  <eSubpackages name="artifact" nsURI="http://www.deis-project.eu/ode/mergedODE/sacm/artifact"
+      nsPrefix="artifact_">
+    <eClassifiers xsi:type="ecore:EClass" name="ArtifactGroup" eSuperTypes="#//base/ArtifactElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="artifactElement" upperBound="-1"
+          eType="#//base/ArtifactElement"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArtifactPackage" eSuperTypes="#//base/ArtifactElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="artifactElement" upperBound="-1"
+          eType="#//base/ArtifactElement" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArtifactPackageBinding" eSuperTypes="#//artifact/ArtifactPackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="participantPackage" lowerBound="2"
+          upperBound="-1" eType="#//artifact/ArtifactPackage"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArtifactPackageInterface" eSuperTypes="#//artifact/ArtifactPackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="implements" lowerBound="1"
+          eType="#//artifact/ArtifactPackage"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArtifactAsset" abstract="true" eSuperTypes="#//base/ArtifactElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="artifactProperty" upperBound="-1"
+          eType="#//artifact/Property"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Property" eSuperTypes="#//artifact/ArtifactAsset"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Technique" eSuperTypes="#//artifact/ArtifactAsset"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Participant" eSuperTypes="#//artifact/ArtifactAsset"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Activity" eSuperTypes="#//artifact/ArtifactAsset">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="startTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="endTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Event" eSuperTypes="#//artifact/ArtifactAsset">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="occurence" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Resource" eSuperTypes="#//artifact/ArtifactAsset"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Artifact" eSuperTypes="#//artifact/ArtifactAsset">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="date" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArtifactAssetRelationship" eSuperTypes="#//artifact/ArtifactAsset">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
+          upperBound="-1" eType="#//artifact/ArtifactAsset"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+          upperBound="-1" eType="#//artifact/ArtifactAsset"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="terminology" nsURI="http://www.deis-project.eu/ode/mergedODE/sacm/terminology"
+      nsPrefix="terminology_">
+    <eClassifiers xsi:type="ecore:EClass" name="TerminologyElement" abstract="true"
+        eSuperTypes="#//base/ArtifactElement"/>
+    <eClassifiers xsi:type="ecore:EClass" name="TerminologyGroup" eSuperTypes="#//terminology/TerminologyElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="terminologyElement" upperBound="-1"
+          eType="#//terminology/TerminologyElement"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TerminologyPackage" eSuperTypes="#//terminology/TerminologyElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="terminologyElement" upperBound="-1"
+          eType="#//terminology/TerminologyElement" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TerminologyPackageBinding" eSuperTypes="#//terminology/TerminologyPackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="participantPackage" lowerBound="2"
+          upperBound="-1" eType="#//terminology/TerminologyPackage"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TerminologyPackageInterface" eSuperTypes="#//terminology/TerminologyPackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="implements" lowerBound="1"
+          eType="#//terminology/TerminologyPackage"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TerminologyAsset" abstract="true"
+        eSuperTypes="#//terminology/TerminologyElement"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Category" eSuperTypes="#//terminology/TerminologyAsset">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="category" eType="#//terminology/Category"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ExpressionElement" abstract="true"
+        eSuperTypes="#//terminology/TerminologyAsset">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="category" upperBound="-1"
+          eType="#//terminology/Category"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Expression" eSuperTypes="#//terminology/ExpressionElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="element" upperBound="-1"
+          eType="#//terminology/ExpressionElement"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Term" eSuperTypes="#//terminology/ExpressionElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalReference" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="origin" eType="#//base/ModelElement"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="argumentation" nsURI="http://www.deis-project.eu/ode/mergedODE/sacm/argumentation"
+      nsPrefix="argumentation_">
+    <eClassifiers xsi:type="ecore:EEnum" name="AssertionDeclaration">
+      <eLiterals name="asserted" value="1"/>
+      <eLiterals name="needsSupport" value="2"/>
+      <eLiterals name="assumed" value="3"/>
+      <eLiterals name="axiomatic" value="4"/>
+      <eLiterals name="defeated" value="5"/>
+      <eLiterals name="asCited" value="6"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArgumentationElement" abstract="true"
+        eSuperTypes="#//base/ArtifactElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="uninstantiated" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArgumentGroup" eSuperTypes="#//argumentation/ArgumentationElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="argumentationElement"
+          upperBound="-1" eType="#//argumentation/ArgumentationElement"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArgumentPackage" eSuperTypes="#//argumentation/ArgumentationElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="argumentationElement"
+          upperBound="-1" eType="#//argumentation/ArgumentationElement" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArgumentPackageInterface" eSuperTypes="#//argumentation/ArgumentPackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="implements" lowerBound="1"
+          eType="#//argumentation/ArgumentPackage"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArgumentPackageBinding" eSuperTypes="#//argumentation/ArgumentPackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="participantPackage" lowerBound="2"
+          upperBound="-1" eType="#//argumentation/ArgumentPackage"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArgumentAsset" abstract="true" eSuperTypes="#//argumentation/ArgumentationElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="content" eType="#//base/MultiLangString"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Assertion" abstract="true" eSuperTypes="#//argumentation/ArgumentAsset">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="assertionDeclaration"
+          lowerBound="1" eType="#//argumentation/AssertionDeclaration" defaultValueLiteral="asserted"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="metaClaim" upperBound="-1"
+          eType="#//argumentation/Claim"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArgumentReasoning" eSuperTypes="#//argumentation/ArgumentAsset">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="structure" eType="#//argumentation/ArgumentPackage"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Claim" eSuperTypes="#//argumentation/Assertion"/>
+    <eClassifiers xsi:type="ecore:EClass" name="AssertedRelationship" abstract="true"
+        eSuperTypes="#//argumentation/Assertion">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isCounter" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
+          upperBound="-1" eType="#//argumentation/ArgumentAsset"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+          upperBound="-1" eType="#//argumentation/ArgumentAsset"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="reasoning" eType="#//argumentation/ArgumentReasoning"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="requies" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+          defaultValueLiteral="0"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ArtifactReference" eSuperTypes="#//argumentation/ArgumentAsset">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="referencedArtifactElement"
+          upperBound="-1" eType="#//base/ArtifactElement"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="AssertedArtifactSupport" eSuperTypes="#//argumentation/AssertedRelationship"/>
+    <eClassifiers xsi:type="ecore:EClass" name="AssertedInference" eSuperTypes="#//argumentation/AssertedRelationship"/>
+    <eClassifiers xsi:type="ecore:EClass" name="AssertedEvidence" eSuperTypes="#//argumentation/AssertedRelationship"/>
+    <eClassifiers xsi:type="ecore:EClass" name="AssertedContext" eSuperTypes="#//argumentation/AssertedRelationship"/>
+    <eClassifiers xsi:type="ecore:EClass" name="AssertedArtifactContext" eSuperTypes="#//argumentation/AssertedRelationship"/>
+  </eSubpackages>
+  <eSubpackages name="assuranceCase" nsURI="http://www.deis-project.eu/ode/mergedODE/sacm/assurancecase"
+      nsPrefix="assuranceCase_">
+    <eClassifiers xsi:type="ecore:EClass" name="AssuranceCasePackage" eSuperTypes="#//base/ArtifactElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="assuranceCasePackage"
+          upperBound="-1" eType="#//assuranceCase/AssuranceCasePackage" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="interface" upperBound="-1"
+          eType="#//assuranceCase/AssuranceCasePackageInterface"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="artifactPackage" upperBound="-1"
+          eType="#//artifact/ArtifactPackage" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="argumentPackage" upperBound="-1"
+          eType="#//argumentation/ArgumentPackage" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="terminologyPackage" upperBound="-1"
+          eType="#//terminology/TerminologyPackage" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="AssuranceCasePackageBinding" eSuperTypes="#//assuranceCase/AssuranceCasePackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="participantPackage" lowerBound="2"
+          upperBound="-1" eType="#//assuranceCase/AssuranceCasePackage"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="AssuranceCasePackageInterface" eSuperTypes="#//assuranceCase/AssuranceCasePackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="implements" lowerBound="1"
+          eType="#//assuranceCase/AssuranceCasePackage"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="odeBase" nsURI="http://www.deis-project.eu/ode/mergedODE/base"
+      nsPrefix="odeBase_">
+    <eClassifiers xsi:type="ecore:EClass" name="BaseElement" abstract="true">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="keyValueMaps" upperBound="-1"
+          eType="#//odeBase/KeyValueMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="Id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="TimeUnit">
+      <eLiterals name="Millisecond"/>
+      <eLiterals name="Second" value="1"/>
+      <eLiterals name="Minute" value="2"/>
+      <eLiterals name="Hour" value="3"/>
+      <eLiterals name="Day" value="4"/>
+      <eLiterals name="Week" value="5"/>
+      <eLiterals name="Month" value="6"/>
+      <eLiterals name="Year" value="7"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="KeyValueMap">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
+          eType="#//odeBase/Value" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Value">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="tag" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="integration" nsURI="http://www.deis-project.eu/ode/mergedODE/integration"
+      nsPrefix="integration_">
+    <eClassifiers xsi:type="ecore:EClass" name="DDIPackage" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="odeProductPackages" upperBound="-1"
+          eType="#//integration/ODEProductPackage" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="assuranceCasePackages"
+          upperBound="-1" eType="#//assuranceCase/AssuranceCasePackage" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ODEProductPackage" abstract="true"
+        eSuperTypes="#//odeBase/BaseElement"/>
+  </eSubpackages>
+  <eSubpackages name="failureLogic" nsURI="http://www.deis-project.eu/ode/mergedODE/failureLogic"
+      nsPrefix="failureLogic_">
+    <eClassifiers xsi:type="ecore:EClass" name="FailureLogicPackage" eSuperTypes="#//integration/ODEProductPackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="failureModels" upperBound="-1"
+          eType="#//failureLogic/FailureModel" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Failure" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="originType" eType="#//failureLogic/FailureOriginType"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="failureClass" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="failureRate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isCcf" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="failureProbDistribution"
+          eType="#//failureLogic/ProbDist" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="ccfFailures" upperBound="-1"
+          eType="#//failureLogic/Failure"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SecurityViolation" eSuperTypes="#//failureLogic/Failure"/>
+    <eClassifiers xsi:type="ecore:EEnum" name="FailureOriginType">
+      <eLiterals name="Input"/>
+      <eLiterals name="Output" value="1"/>
+      <eLiterals name="Internal" value="2"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="FailureModel" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="minimalCutsets" upperBound="-1"
+          eType="#//failureLogic/MinimalCutSets" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="failures" upperBound="-1"
+          eType="#//failureLogic/Failure" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="subModels" upperBound="-1"
+          eType="#//failureLogic/FailureModel"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MinimalCutSets" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="cutsets" upperBound="-1"
+          eType="#//failureLogic/MinimalCutset" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="failures" upperBound="-1"
+          eType="#//failureLogic/Failure"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MinimalCutset" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="failures" upperBound="-1"
+          eType="#//failureLogic/Failure"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ProbDist" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+          eType="#//failureLogic/ProbDistParam" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ProbDistParam" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="GateType">
+      <eLiterals name="OR"/>
+      <eLiterals name="AND" value="1"/>
+      <eLiterals name="NOT" value="2"/>
+      <eLiterals name="XOR" value="3"/>
+      <eLiterals name="VOTE" value="4"/>
+      <eLiterals name="PAND" value="5"/>
+      <eLiterals name="POR" value="6"/>
+      <eLiterals name="SAND" value="7"/>
+      <eLiterals name="InputEvent" value="8"/>
+      <eLiterals name="OutputEvent" value="9"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="CauseType">
+      <eLiterals name="InputEvent"/>
+      <eLiterals name="OutputEvent" value="1"/>
+      <eLiterals name="BasicEvent" value="2"/>
+      <eLiterals name="Gate" value="3"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="FaultTree" eSuperTypes="#//failureLogic/FailureModel">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="causes" upperBound="-1"
+          eType="#//failureLogic/Cause" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Cause" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="causeType" eType="#//failureLogic/CauseType"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="failure" eType="#//failureLogic/Failure"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Gate" eSuperTypes="#//failureLogic/Cause">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="gateType" eType="#//failureLogic/GateType"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="causes" upperBound="-1"
+          eType="#//failureLogic/Cause"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MarkovChain" eSuperTypes="#//failureLogic/FailureModel">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="transitions" upperBound="-1"
+          eType="#//failureLogic/Transition" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="states" upperBound="-1"
+          eType="#//failureLogic/State" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="State" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInitialState" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isFailState" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="failState" eType="#//failureLogic/Failure"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="transition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="transitionProbDistribution"
+          eType="#//failureLogic/ProbDist" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="fromStates" upperBound="-1"
+          eType="#//failureLogic/State"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="toStates" upperBound="-1"
+          eType="#//failureLogic/State"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="FMEAType">
+      <eLiterals name="FMEA"/>
+      <eLiterals name="FMEDA" value="1"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="FMEA" eSuperTypes="#//failureLogic/FailureModel">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//failureLogic/FMEAType"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="entries" upperBound="-1"
+          eType="#//failureLogic/FMEAEntry" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="FMEAEntry" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="effect" eType="#//failureLogic/Failure"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mode" eType="#//failureLogic/Failure"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="FMEDAEntry" eSuperTypes="#//failureLogic/FMEAEntry">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="diagnosisRate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="diagnosisProbDistribution"
+          eType="#//failureLogic/ProbDist" containment="true"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="dependability" nsURI="http://www.deis-project.eu/ode/mergedODE/dependability"
+      nsPrefix="dependability_">
+    <eClassifiers xsi:type="ecore:EClass" name="MaintenanceProcedure" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="activityDescription"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="technicalDescription"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="toolSpecification" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="staffNumber" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="staffSkillLevel" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="staffTrainingDescription"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MeasureType" eSuperTypes="#//odeBase/BaseElement"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Measure" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="intrinsicSafety" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="safeGuard" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="applierInformation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="riskAcceptability" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="furtherAction" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="source" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="measureType" eType="#//dependability/MeasureType"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="assuranceLevel" eType="#//dependability/AssuranceLevel"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="FaultToleranceMeasure" eSuperTypes="#//dependability/Measure"/>
+    <eClassifiers xsi:type="ecore:EClass" name="DependabilityPackage" eSuperTypes="#//integration/ODEProductPackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="measures" upperBound="-1"
+          eType="#//dependability/Measure" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="measureTypes" upperBound="-1"
+          eType="#//dependability/MeasureType" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="maintenanceProcedures"
+          upperBound="-1" eType="#//dependability/MaintenanceProcedure" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="HARAPackages" upperBound="-1"
+          eType="#//dependability/HARAPackage" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="requirementPackages"
+          upperBound="-1" eType="#//dependability/RequirementPackage" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="domainPackages" upperBound="-1"
+          eType="#//dependability/DomainPackage" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="TARAPackages" upperBound="-1"
+          eType="#//dependability/TARAPackage" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="HARAPackage" eSuperTypes="#//integration/ODEProductPackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="hazards" upperBound="-1"
+          eType="#//dependability/Hazard" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="hazardTypes" upperBound="-1"
+          eType="#//dependability/HazardType" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="hazardTypeSystems" upperBound="-1"
+          eType="#//dependability/HazardTypeSystem" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="malfunctions" upperBound="-1"
+          eType="#//dependability/Malfunction" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="riskAssessments" upperBound="-1"
+          eType="#//dependability/RiskAssessment" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="riskParameters" upperBound="-1"
+          eType="#//dependability/RiskParameter" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Hazard" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="condition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="failures" upperBound="-1"
+          eType="#//failureLogic/Failure"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="measures" upperBound="-1"
+          eType="#//dependability/Measure"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="hazardType" eType="#//dependability/HazardType"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="HazardTypeSystem" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="hazardTypes" upperBound="-1"
+          eType="#//dependability/HazardType"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="HazardType" eSuperTypes="#//odeBase/BaseElement"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Malfunction" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="hazards" upperBound="-1"
+          eType="#//dependability/Hazard"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="RiskAssessment" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="relatedStandard" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="riskParameters" upperBound="-1"
+          eType="#//dependability/RiskParameter"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="hazard" eType="#//dependability/Hazard"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="RiskParameter" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="argument" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Situation" eSuperTypes="#//dependability/RiskParameter">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="likelihood" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Accident" eSuperTypes="#//dependability/RiskParameter">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="severity" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="OperatorMeasure" eSuperTypes="#//dependability/RiskParameter">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="controlability" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="RequirementPackage" eSuperTypes="#//integration/ODEProductPackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="requirementSources" upperBound="-1"
+          eType="#//dependability/RequirementSource" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dependabilityRequirements"
+          upperBound="-1" eType="#//dependability/DependabilityRequirement" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="RequirementSource" abstract="true"
+        eSuperTypes="#//odeBase/BaseElement"/>
+    <eClassifiers xsi:type="ecore:EClass" name="LegalContract" eSuperTypes="#//dependability/RequirementSource"/>
+    <eClassifiers xsi:type="ecore:EClass" name="DependabilityRequirement" abstract="true"
+        eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="decompositionArgument"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="refinedRequirements"
+          upperBound="-1" eType="#//dependability/DependabilityRequirement"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="requirementSource" eType="#//dependability/RequirementSource"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="measures" upperBound="-1"
+          eType="#//dependability/Measure"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="failures" upperBound="-1"
+          eType="#//failureLogic/Failure"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="assuranceLevel" eType="#//dependability/AssuranceLevel"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="maintenanceProcedures"
+          upperBound="-1" eType="#//dependability/MaintenanceProcedure"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SafetyRequirement" eSuperTypes="#//dependability/DependabilityRequirement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="failureReactionTime"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="failureDetectionTime"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="failureLatencyTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="isSafetyGoal" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="hazards" upperBound="-1"
+          eType="#//dependability/Hazard"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SecurityRequirement" eSuperTypes="#//dependability/DependabilityRequirement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="securityCapabilities"
+          upperBound="-1" eType="#//dependability/SecurityCapability"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="DomainPackage" eSuperTypes="#//integration/ODEProductPackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="standards" upperBound="-1"
+          eType="#//dependability/Standard" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="assuranceLevels" upperBound="-1"
+          eType="#//dependability/AssuranceLevel" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Standard" eSuperTypes="#//odeBase/BaseElement"/>
+    <eClassifiers xsi:type="ecore:EClass" name="AssuranceLevel" eSuperTypes="#//odeBase/BaseElement"/>
+    <eClassifiers xsi:type="ecore:EClass" name="SafetyStandard" eSuperTypes="#//dependability/Standard">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="assuranceLevels" upperBound="-1"
+          eType="#//dependability/AssuranceLevel"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="SecurityApplicationType">
+      <eLiterals name="Preventive"/>
+      <eLiterals name="Active" value="1"/>
+      <eLiterals name="Passive" value="2"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="FinancialCostType">
+      <eLiterals name="USD"/>
+      <eLiterals name="EUR" value="1"/>
+      <eLiterals name="GBP" value="2"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="OperationalCostType">
+      <eLiterals name="Workhours"/>
+      <eLiterals name="Workdays" value="1"/>
+      <eLiterals name="Workmonths" value="2"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TARAPackage" eSuperTypes="#//integration/ODEProductPackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="identifiedRisks" upperBound="-1"
+          eType="#//dependability/SecurityRisk" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="controls" upperBound="-1"
+          eType="#//dependability/SecurityControl" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="consideredAssets" upperBound="-1"
+          eType="#//dependability/Asset" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="consideredThreatAgents"
+          upperBound="-1" eType="#//dependability/ThreatAgent" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Asset" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="financialValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="financialCostType" eType="#//dependability/FinancialCostType"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="operationalCost" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="operationalCostType"
+          eType="#//dependability/OperationalCostType"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SecurityControl" eSuperTypes="#//dependability/Measure">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//dependability/SecurityApplicationType"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="vulnerabilities" upperBound="-1"
+          eType="#//dependability/Vulnerability"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SecurityCapability" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//dependability/SecurityApplicationType"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="implementedBy" upperBound="-1"
+          eType="#//dependability/SecurityControl"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Vulnerability" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="VulnerableItem" eSuperTypes="#//dependability/Asset">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="vulnerabilities" upperBound="-1"
+          eType="#//dependability/Vulnerability" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="AttackerGoal" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="addressedBy" upperBound="-1"
+          eType="#//dependability/SecurityCapability" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="attacks" upperBound="-1"
+          eType="#//dependability/Attack" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="attackedItems" upperBound="-1"
+          eType="#//dependability/VulnerableItem"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SecurityRisk" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="likelihood" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="impactAsset" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="impactIndividuals" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="impactBusiness" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="attackerGoals" upperBound="-1"
+          eType="#//dependability/AttackerGoal"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Attack" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="financialCost" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="financialCostType" eType="#//dependability/FinancialCostType"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeRequired" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeUnit" eType="#//odeBase/TimeUnit"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="difficulty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="detectability" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="violations" upperBound="-1"
+          eType="#//failureLogic/SecurityViolation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="exploitedVulnerabilities"
+          upperBound="-1" eType="#//dependability/Vulnerability"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Payload" eSuperTypes="#//dependability/Attack"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Action" eSuperTypes="#//dependability/Attack"/>
+    <eClassifiers xsi:type="ecore:EClass" name="ThreatAgent" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="skillLevel" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="motivation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="anonymityDesire" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="attackerGoals" upperBound="-1"
+          eType="#//dependability/AttackerGoal" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Human" eSuperTypes="#//dependability/ThreatAgent">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1"
+          eType="#//dependability/Action"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="NonHuman" eSuperTypes="#//dependability/ThreatAgent">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="payloads" upperBound="-1"
+          eType="#//dependability/Payload"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="architecture" nsURI="http://www.deis-project.eu/ode/mergedODE/architecture"
+      nsPrefix="architecture_">
+    <eClassifiers xsi:type="ecore:EClass" name="DesignPackage" eSuperTypes="#//integration/ODEProductPackage">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="systems" upperBound="-1"
+          eType="#//architecture/System" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="functions" upperBound="-1"
+          eType="#//architecture/Function" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="System" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="overallLifetime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="overallLifetimeTimeUnit"
+          eType="#//odeBase/TimeUnit" defaultValueLiteral="Hour"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="systemBoundaries" lowerBound="1"
+          upperBound="-1" eType="#//architecture/SystemBoundary" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="contexts" upperBound="-1"
+          eType="#//architecture/Context" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="configurations" upperBound="-1"
+          eType="#//architecture/Configuration" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
+          eType="#//architecture/Signal" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="ports" upperBound="-1"
+          eType="#//architecture/Port" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="subSystems" upperBound="-1"
+          eType="#//architecture/System"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="realisedFunctions" upperBound="-1"
+          eType="#//architecture/Function"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="asAsset" eType="#//dependability/Asset"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dependabilityRequirements"
+          upperBound="-1" eType="#//dependability/DependabilityRequirement"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="assuranceLevel" eType="#//dependability/AssuranceLevel"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="appliedStandards" upperBound="-1"
+          eType="#//dependability/Standard"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="failureModels" upperBound="-1"
+          eType="#//failureLogic/FailureModel"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Function" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
+          eType="#//architecture/Signal" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="ports" upperBound="-1"
+          eType="#//architecture/Port" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="perfChars" eType="#//architecture/PerfChars"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="subFunctions" upperBound="-1"
+          eType="#//architecture/Function"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="asAsset" eType="#//dependability/Asset"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dependabilityRequirements"
+          upperBound="-1" eType="#//dependability/DependabilityRequirement"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="assuranceLevel" eType="#//dependability/AssuranceLevel"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="failureModels" upperBound="-1"
+          eType="#//failureLogic/FailureModel"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="malfunctions" upperBound="-1"
+          eType="#//dependability/Malfunction"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SafetyFunction" eSuperTypes="#//architecture/Function">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="object" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="behavior" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="safeState" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Port" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="flowType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="direction" eType="#//architecture/PortDirection"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="interfaceFailures" upperBound="-1"
+          eType="#//failureLogic/Failure"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="refinedPorts" upperBound="-1"
+          eType="#//architecture/Port"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="assuranceLevel" eType="#//dependability/AssuranceLevel"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dependabilityRequirements"
+          upperBound="-1" eType="#//dependability/DependabilityRequirement"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="PerfChars" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="responseTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SystemBoundary" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="ports" upperBound="-1"
+          eType="#//architecture/Port"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Context" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="usageHistory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="missionTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="missionTimeTimeUnit"
+          eType="#//odeBase/TimeUnit" defaultValueLiteral="Hour"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="PhysicalComponent" eSuperTypes="#//architecture/System">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="dimensions" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="pricePerUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mass" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="protectionCategory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="usefulLifetime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="usefulLifetimeTimeUnit"
+          eType="#//odeBase/TimeUnit"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="lifecycleConditions"
+          upperBound="-1" eType="#//architecture/LifecycleCondition" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="logicalComponents" upperBound="-1"
+          eType="#//architecture/LogicalComponent"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="maintenanceProcedure"
+          eType="#//dependability/MaintenanceProcedure"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="LogicalComponent" eSuperTypes="#//architecture/System"/>
+    <eClassifiers xsi:type="ecore:EClass" name="LifecycleCondition" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="conditions" upperBound="-1"
+          eType="#//architecture/LifecycleCondition" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="PortDirection">
+      <eLiterals name="IN"/>
+      <eLiterals name="OUT" value="1"/>
+      <eLiterals name="INOUT" value="2"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Signal" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="fromPort" lowerBound="1"
+          eType="#//architecture/Port"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="toPort" lowerBound="1"
+          eType="#//architecture/Port"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SafetyRelatedSystem" eSuperTypes="#//architecture/System">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="safeState" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Configuration" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="subSystems" upperBound="-1"
+          eType="#//architecture/System"/>
+    </eClassifiers>
+  </eSubpackages>
+</ecore:EPackage>
