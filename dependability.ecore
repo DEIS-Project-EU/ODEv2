@@ -98,6 +98,8 @@
           eType="#//Requirements/RequirementSource" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="dependabilityRequirements"
           upperBound="-1" eType="#//Requirements/DependabilityRequirement" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="assumptions" upperBound="-1"
+          eType="#//Requirements/Assertion" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="RequirementSource" abstract="true"
         eSuperTypes="base.ecore#//BaseElement"/>
@@ -116,6 +118,8 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="assuranceLevel" eType="#//Domain/AssuranceLevel"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="maintenanceProcedures"
           upperBound="-1" eType="#//MaintenanceProcedure"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dependabilityContracts"
+          upperBound="-1" eType="#//Requirements/DependabilityContract" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="SafetyRequirement" eSuperTypes="#//Requirements/DependabilityRequirement">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="failureReactionTime"
@@ -130,6 +134,20 @@
     <eClassifiers xsi:type="ecore:EClass" name="SecurityRequirement" eSuperTypes="#//Requirements/DependabilityRequirement">
       <eStructuralFeatures xsi:type="ecore:EReference" name="securityCapabilities"
           upperBound="-1" eType="#//TARA/SecurityCapability"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="DependabilityContract" eSuperTypes="base.ecore#//BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="assumptions" upperBound="-1"
+          eType="#//Requirements/Assertion"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="guaranteeFormalization"
+          upperBound="-1" eType="#//Requirements/Formalization" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Assertion" eSuperTypes="base.ecore#//BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="formalization" upperBound="-1"
+          eType="#//Requirements/Formalization" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Formalization">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="expression" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="language" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="Domain" nsURI="http://www.deis-project.eu/ode/dependability/Domain"
