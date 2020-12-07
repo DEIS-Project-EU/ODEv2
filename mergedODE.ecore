@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="top" nsURI="http://www.deis-project.eu/ode/mergedODE" nsPrefix="mergedODE">
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="ode" nsURI="http://www.deis-project.eu/ode/mergedODE" nsPrefix="mergedODE">
   <eSubpackages name="base" nsURI="http://www.deis-project.eu/ode/mergedODE/sacm/base"
       nsPrefix="base_">
     <eClassifiers xsi:type="ecore:EClass" name="Element" abstract="true"/>
@@ -408,6 +408,8 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="source" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="measureType" eType="#//dependability/MeasureType"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="assuranceLevel" eType="#//dependability/AssuranceLevel"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mitigates" upperBound="-1"
+          eType="#//failureLogic/Failure"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="FaultToleranceMeasure" eSuperTypes="#//dependability/Measure"/>
     <eClassifiers xsi:type="ecore:EClass" name="DependabilityPackage" eSuperTypes="#//integration/ODEProductPackage">
@@ -480,8 +482,6 @@
           eType="#//dependability/RequirementSource" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="dependabilityRequirements"
           upperBound="-1" eType="#//dependability/DependabilityRequirement" containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="assumptions" upperBound="-1"
-          eType="#//dependability/Assertion" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="RequirementSource" abstract="true"
         eSuperTypes="#//odeBase/BaseElement"/>
@@ -500,8 +500,6 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="assuranceLevel" eType="#//dependability/AssuranceLevel"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="maintenanceProcedures"
           upperBound="-1" eType="#//dependability/MaintenanceProcedure"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="contracts" upperBound="-1"
-          eType="#//dependability/DependabilityContract" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="SafetyRequirement" eSuperTypes="#//dependability/DependabilityRequirement">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="failureReactionTime"
@@ -627,20 +625,6 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="payloads" upperBound="-1"
           eType="#//dependability/Payload"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="DependabilityContract" eSuperTypes="#//odeBase/BaseElement">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="assumptions" upperBound="-1"
-          eType="#//dependability/Assertion"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="guaranteeFormalization"
-          upperBound="-1" eType="#//dependability/Formalization" containment="true"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="Assertion" eSuperTypes="#//odeBase/BaseElement">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="formalization" upperBound="-1"
-          eType="#//dependability/Formalization" containment="true"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="Formalization">
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="expression" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="language" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    </eClassifiers>
   </eSubpackages>
   <eSubpackages name="architecture" nsURI="http://www.deis-project.eu/ode/mergedODE/architecture"
       nsPrefix="architecture_">
@@ -699,8 +683,6 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="object" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="behavior" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="safeState" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="detects" upperBound="-1"
-          eType="#//failureLogic/Failure"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Port" eSuperTypes="#//odeBase/BaseElement">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="flowType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
